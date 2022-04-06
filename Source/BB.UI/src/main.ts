@@ -1,15 +1,14 @@
-import Vue from 'vue';
-import App from './App.vue';
-import Axios from 'axios';
-import VueAxios from 'vue-axios';
-import { store } from './store';
+import { createApp } from 'vue';
+import { createPinia } from 'pinia';
+import Popper from "vue3-popper";
 
-//Vue.config.productionTip = true;
-Vue.config.devtools = true;
+import App from './App.vue'
+import router from './router'
 
-Vue.use(VueAxios, Axios);
+const app = createApp(App)
 
-new Vue({
-  store,
-  render: h => h(App)
-}).$mount('#app');
+app.use(createPinia())
+app.use(router)
+app.component("Popper", Popper);
+
+app.mount('#app')

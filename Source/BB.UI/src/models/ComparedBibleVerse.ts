@@ -1,4 +1,6 @@
-interface ComparedBibleVerse {
+import type { ComparedWord } from "./ComparedWord";
+
+export interface ComparedBibleVerse {
     ID: number;
     Book: number;
     Chapter: number;

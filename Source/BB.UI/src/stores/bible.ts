@@ -1,32 +1,30 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
+import { defineStore } from 'pinia'
 
-Vue.config.devtools = true;
-Vue.use(Vuex);
-
-export const store = new Vuex.Store({
-  state: {
+export const useBibleStore = defineStore({
+  id: 'bible',
+  state: () => ({
     mainBible: 2,
     compareBible: 1,
     book: 1,
     chapter: 1
-  },
-  mutations: {
-    setMainBible(state, bibleID: number) {
-      state.mainBible = bibleID;
+  }),
+  actions: {
+    setMainBible(bibleID: number) {
+      this.mainBible = bibleID;
     },
-    setCompareBible(state, bibleID: number) {
-      state.compareBible = bibleID;
+    setCompareBible(bibleID: number) {
+      this.compareBible = bibleID;
     },
-    setBibleBook(state, book: number) {
-      state.book = book;
+    setBibleBook(book: number) {
+      this.book = book;
     },
-    setBibleChapter(state, chapter: number) {
-      state.chapter = chapter;
+    setBibleChapter(chapter: number) {
+      this.chapter = chapter;
     }
   },
   getters: {
     getMainBible: state => {
+      console.log(state.mainBible);
       return state.mainBible;
     },
     getCompareBible: state => {
@@ -39,16 +37,16 @@ export const store = new Vuex.Store({
       return state.chapter;
     },
     getBibleCompareEndpoint: state => {
-      return `./api/BibleComparer?` +
+      return `${import.meta.env.VITE_APP_API_BASE_URL}/api/BibleComparer?` +
         `mainBible=${state.mainBible}` +
         `&book=${state.book}` +
         `&chapter=${state.chapter}` +
         `&compareBible=${state.compareBible}`;
     },
     getBibleBookChaptersEndpoint: state => {
-      return `./api/BibleMeta/GetChaptersForBookInBible?` +
+      return `${import.meta.env.VITE_APP_API_BASE_URL}/api/BibleMeta/GetChaptersForBookInBible?` +
         `bible=${state.mainBible}` +
         `&book=${state.book}`;
     }
   }
-});
+})
