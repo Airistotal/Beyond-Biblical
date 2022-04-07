@@ -1,14 +1,34 @@
 import { createApp } from 'vue';
+import { Quasar } from 'quasar'
 import { createPinia } from 'pinia';
-import Popper from "vue3-popper";
 
-import App from './App.vue'
-import router from './router'
+// Import icon libraries
+import '@quasar/extras/material-icons/material-icons.css'
+// Import Quasar css
+import 'quasar/src/css/index.sass'
 
-const app = createApp(App)
+import App from './App.vue';
+import router from './router';
 
-app.use(createPinia())
-app.use(router)
-app.component("Popper", Popper);
+const app = createApp(App);
 
-app.mount('#app')
+app.use(createPinia());
+app.use(router);
+app.use(Quasar, {
+    config: {
+        brand: {
+            primary: '#464655',
+            secondary: '#f3d9dc',
+            accent: '#5d8298',
+
+            dark: '#1c1c22',
+
+            positive: '#7b9e89',
+            negative: '#d95d39',
+            info: '#336699',
+            warning: '#fed766'
+        }
+    }
+});
+
+app.mount('#app');

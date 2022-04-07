@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import BiblePage from '@/components/BibleReader/BiblePage.vue';
+import BiblePage from '@/components/bible-reader/BiblePage.component.vue';
 </script>
 
 <template>

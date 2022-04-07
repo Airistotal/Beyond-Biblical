@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import BBDropDown from "@/components/common/BBDropDown.vue";
+import BBDropDown from "@/components/common/BBDropDown.component.vue";
 import { useBibleStore } from '@/stores/bible';
 import { ref } from "vue";
 
@@ -34,32 +34,42 @@ function changeBibleChapter(chapter: number) {
 
 <template>
   <div id="bibleMenu">
-    <BBDropDown
-      dropDownId="selectMainBible"
-      :apiEndpoint="biblesUrl"
-      :initialValue="bibleStore.getMainBible"
-      @changed="changeMainBible"
-    />
-
-    <BBDropDown
-      dropDownId="selectCompareBible"
-      :apiEndpoint="biblesUrl"
-      :initialValue="bibleStore.getCompareBible"
-      @changed="changeCompareBible"
-    />
-
-    <BBDropDown
-      dropDownId="selectBook"
-      :apiEndpoint="bookUrl"
-      :initialValue="bibleStore.getBook"
-      @changed="changeBibleBook"
-    />
-
-    <BBDropDown
-      dropDownId="selectChapter"
-      :apiEndpoint="chaptersUrl"
-      :initialValue="bibleStore.getChapter"
-      @changed="changeBibleChapter"
-    />
+    <div class="inline">
+      <BBDropDown
+        :apiEndpoint="biblesUrl"
+        :initialValue="bibleStore.getMainBible"
+        @changed="changeMainBible"
+      />
+    </div>
+    &nbsp;
+    <div class="inline">
+      <BBDropDown
+        :apiEndpoint="biblesUrl"
+        :initialValue="bibleStore.getCompareBible"
+        @changed="changeCompareBible"
+      />
+    </div>
+    &nbsp;
+    <div class="inline">
+      <BBDropDown
+        :apiEndpoint="bookUrl"
+        :initialValue="bibleStore.getBook"
+        @changed="changeBibleBook"
+      />
+    </div>
+    &nbsp;
+    <div class="inline">
+      <BBDropDown
+        :apiEndpoint="chaptersUrl"
+        :initialValue="bibleStore.getChapter"
+        @changed="changeBibleChapter"
+      />
+    </div>
   </div>
 </template>
+
+<style>
+.inline {
+  display: inline-block;
+}
+</style>

@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import BiblePageView from '@/views/BiblePageView.vue';
+import BiblePageView from '@/views/BiblePage.view.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

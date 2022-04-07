@@ -3,8 +3,8 @@ import { defineStore } from 'pinia'
 export const useBibleStore = defineStore({
   id: 'bible',
   state: () => ({
-    mainBible: 2,
-    compareBible: 1,
+    mainBible: 1,
+    compareBible: 2,
     book: 1,
     chapter: 1
   }),
