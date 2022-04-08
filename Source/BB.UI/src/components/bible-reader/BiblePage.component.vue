@@ -48,7 +48,7 @@ navigate();
   <BibleMenu @navigate="navigate" />
   <div id="bibleContent" :class="getClassForContent()">
     <div class="center">
-      <q-spinner v-if="loading" color="primary" size="3em" />
+      <q-spinner v-if="loading" color="warn" size="3em" />
     </div>
 
     <template v-if="!loading" v-for="verse in verses">
@@ -57,7 +57,7 @@ navigate();
         <div class="inline" v-if="word.Difference !== null">
           <div class="word" :class="getClassForWord(word)" @click="searchForWord(word)">
             {{ word.MainWord }}
-            <q-tooltip>{{ word.Difference === '' ? 'Removed' : word.Difference }}</q-tooltip>
+            <q-tooltip class="tooltip">{{ word.Difference === '' ? 'Removed' : word.Difference }}</q-tooltip>
           </div>
         </div>
         <div
@@ -116,6 +116,11 @@ sup {
   @include sm-screen {
     column-count: 1;
   }
+}
+
+.tooltip {
+  background-color: $info;
+  font-size: 14px;
 }
 
 #bibleContent {

@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import MainMenu from './components/common/MainMenu.component.vue';
+import MainMenu from '@/components/common/MainMenu.component.vue';
 import { RouterView } from 'vue-router';
 import { useQuasar } from 'quasar';
 import { provide, ref } from 'vue';
-import { DictionaryApi } from './services/dictionary.api';
-import Dictionary from './components/dictionary/Dictionary.component.vue';
-import { SearchWordEvent } from './models/Events/SearchWordEvent';
-import { EventDispatcher } from './services/event.bus';
+import { DictionaryApi } from '@/services/dictionary.api';
+import Dictionary from '@/components/dictionary/Dictionary.component.vue';
+import { SearchWordEvent } from '@/models/Events/SearchWordEvent';
+import { EventDispatcher } from '@/services/event.bus';
 
 const $q = useQuasar();
 
