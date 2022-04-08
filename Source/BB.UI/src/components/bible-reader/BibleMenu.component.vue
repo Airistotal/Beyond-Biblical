@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import BBDropDown from "@/components/common/BBDropDown.component.vue";
-import { useBibleStore } from '@/stores/bible';
 import { ref } from "vue";
-import SearchInput from "../common/SearchInput.component.vue";
+import { useBibleStore } from '@/stores/bible';
+import BBDropDown from "@/components/common/BBDropDown.component.vue";
+import SearchInput from "@/components/common/SearchInput.component.vue";
 
-const emit = defineEmits<{ (e: 'navigate'): void }>();
+const emit = defineEmits<{ (e: 'navigate'): void, (e: 'toggleSearchOnClick'): void }>();
 
+const searchOnClick = ref(false);
 const searchWord = ref("");
 const errorMessage = ref("");
 const bibleStore = useBibleStore();
@@ -33,6 +34,11 @@ function changeBibleChapter(chapter: number) {
   bibleStore.setBibleChapter(chapter);
   emit("navigate");
 };
+
+function toggleSearchOnClick() {
+  searchOnClick.value = !searchOnClick.value;
+  emit("toggleSearchOnClick");
+}
 </script>
 
 <template>
@@ -67,6 +73,15 @@ function changeBibleChapter(chapter: number) {
     </div>&nbsp;
     <div class="inline">
       <SearchInput :searchWord="searchWord" :errorMessage="errorMessage" />
+    </div>&nbsp;
+    <div class="inline">
+      <q-icon
+        :color="searchOnClick ? 'positive' : 'primary'"
+        name="mdi-book-search"
+        size="2em"
+        @click="toggleSearchOnClick()"
+      />
+      <q-tooltip class="tooltip">{{ 'Enables clicking to search a word in the dictionary.' }}</q-tooltip>
     </div>
   </div>
 </template>

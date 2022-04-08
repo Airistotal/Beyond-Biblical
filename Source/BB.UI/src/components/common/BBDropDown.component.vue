@@ -1,9 +1,9 @@
 <script setup lang="ts">
+import { ref, watch } from "vue";
+import axios from "axios";
 import type { AxiosResponse, AxiosError } from "axios";
 import type { DropDownDataDto } from "@/models/DropDownDataDto";
 import type { DropDownOption } from "@/models/DropDownOption";
-import { ref, watch } from "vue";
-import axios from "axios";
 
 const props = defineProps<{ apiEndpoint: string, initialValue: number }>();
 const emits = defineEmits<{ (e: 'changed', value: number): void }>();

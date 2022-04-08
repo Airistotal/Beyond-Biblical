@@ -11,6 +11,7 @@ import { ref } from "vue";
 const bibleStore = useBibleStore();
 const verses = ref([] as ComparedBibleVerse[]);
 const loading = ref(true);
+const searchOnClick = ref(false);
 
 async function navigate() {
   loading.value = true;
@@ -30,7 +31,10 @@ async function navigate() {
 }
 
 function getClassForWord(word: ComparedWord): string {
-  return word.Difference !== null ? word.Difference === '' ? 'highlight-removed' : 'highlight' : '';
+  let highlight = word.Difference !== null ? word.Difference === '' ? 'highlight-removed ' : 'highlight ' : '';
+  let clickable = searchOnClick.value ? 'clickable ' : '';
+
+  return highlight + clickable;
 }
 
 function getClassForContent(): string {
@@ -38,30 +42,40 @@ function getClassForContent(): string {
 }
 
 function searchForWord(word: ComparedWord): void {
-  EventDispatcher.broadcast(new SearchWordEvent(word.MainWord));
+  if (searchOnClick.value) {
+    EventDispatcher.broadcast(new SearchWordEvent(word.MainWord));
+  }
+}
+
+function toggleSearchOnClick() {
+  searchOnClick.value = !searchOnClick.value;
 }
 
 navigate();
 </script>
 
 <template>
-  <BibleMenu @navigate="navigate" />
+  <BibleMenu @navigate="navigate" @toggleSearchOnClick="toggleSearchOnClick" />
   <div id="bibleContent" :class="getClassForContent()">
     <div class="center">
       <q-spinner v-if="loading" color="warn" size="3em" />
     </div>
 
     <template v-if="!loading" v-for="verse in verses">
-      <sup>{{ verse.Verse }}</sup>
+      <sup style="cursor: default;">{{ verse.Verse }}</sup>
       <template v-for="word in verse.ComparedWords">
         <div class="inline" v-if="word.Difference !== null">
           <div class="word" :class="getClassForWord(word)" @click="searchForWord(word)">
             {{ word.MainWord }}
-            <q-tooltip class="tooltip">{{ word.Difference === '' ? 'Removed' : word.Difference }}</q-tooltip>
+            <q-tooltip
+              :target="!searchOnClick"
+              class="tooltip"
+            >{{ word.Difference === '' ? 'Removed' : word.Difference }}</q-tooltip>
           </div>
         </div>
         <div
           class="word"
+          :class="{ clickable: searchOnClick }"
           v-if="word.Difference === null"
           @click="searchForWord(word)"
         >{{ word.MainWord }}</div>
@@ -93,13 +107,17 @@ sup {
   display: inline-block;
 }
 
+.clickable {
+  cursor: pointer !important;
+}
+
 .word {
+  cursor: default;
   display: inline-block;
   padding-left: 2px;
   padding-right: 2px;
   line-height: 23px;
   margin-bottom: 5px;
-  cursor: pointer;
 }
 
 .highlight {

@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import type { WordDefinition } from '@/models/WordDefinition';
-import { DictionaryApi } from '@/services/dictionary.api';
 import { inject, ref } from 'vue';
 import type { AxiosError } from 'axios';
+import type { WordDefinition } from '@/models/WordDefinition';
+import { DictionaryApi } from '@/services/dictionary.api';
 import { EventDispatcher } from '@/services/event.bus';
 import { SearchWordEvent } from '@/models/Events/SearchWordEvent';
-import SearchInput from '../common/SearchInput.component.vue';
+import SearchInput from '@/components/common/SearchInput.component.vue';
 
 const dictionaryApi = inject(DictionaryApi.name) as DictionaryApi;
 
