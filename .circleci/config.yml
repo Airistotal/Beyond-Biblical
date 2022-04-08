@@ -31,7 +31,7 @@ jobs:
           command: New-Item -Path ".\Source\BB.API\bin\Release\netcoreapp3.0\publish\" -Name "wwwroot" -ItemType "directory"
       - run:
           name: "Clean and Copy UI to publish folder"
-          command: Copy-Item -Path ".\Source\BB.API\wwwroot\*" -Destination ".\Source\BB.API\bin\Release\netcoreapp3.0\publish\wwwroot" -Recurse
+          command: Copy-Item -Path ".\Source\BB.UI\dist\*" -Destination ".\Source\BB.API\bin\Release\netcoreapp3.0\publish\wwwroot" -Recurse
       - persist_to_workspace:
           root: .
           paths:
