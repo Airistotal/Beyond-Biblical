@@ -24,7 +24,6 @@ export const useBibleStore = defineStore({
   },
   getters: {
     getMainBible: state => {
-      console.log(state.mainBible);
       return state.mainBible;
     },
     getCompareBible: state => {

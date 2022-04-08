@@ -9,9 +9,7 @@ const props = defineProps<{ apiEndpoint: string, initialValue: number }>();
 const emits = defineEmits<{ (e: 'changed', value: number): void }>();
 
 const optionData = ref<DropDownOption[]>([]);
-const selectedData = ref<DropDownOption>({
-  label: "Loading..."
-} as DropDownOption);
+const selectedData = ref<DropDownOption>({ label: "..." } as DropDownOption);
 
 function loadData() {
   axios
@@ -41,7 +39,7 @@ function converDropDownDataToOptions(dropDownData: DropDownDataDto[]): DropDownO
 
 loadData();
 
-watch(() => selectedData.value, () => {
+watch(() => selectedData.value.value, () => {
   emits('changed', selectedData.value.value);
 });
 
@@ -56,6 +54,6 @@ export default { name: "bb-dropdown" }
 
 <template>
   <div>
-    <q-select v-model="selectedData" :options="optionData"/>
+    <q-select v-model="selectedData" :options="optionData" />
   </div>
 </template>

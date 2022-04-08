@@ -2,17 +2,43 @@
 import MainMenu from './components/common/MainMenu.component.vue';
 import { RouterView } from 'vue-router';
 import { useQuasar } from 'quasar';
+import { provide, ref } from 'vue';
+import { DictionaryApi } from './services/dictionary.api';
+import Dictionary from './components/dictionary/Dictionary.component.vue';
+import { SearchWordEvent } from './models/Events/SearchWordEvent';
+import { EventDispatcher } from './services/event.bus';
 
 const $q = useQuasar();
 
 $q.dark.set(true);
+
+// setup DI
+provide(DictionaryApi.name, new DictionaryApi());
+
+function dictionaryToggle() {
+  rightDrawerOpen.value = !rightDrawerOpen.value;
+}
+
+const rightDrawerOpen = ref(false);
+
+class EventCatcher {
+    @EventDispatcher.register(new SearchWordEvent(""))
+    searchForWord(evt: SearchWordEvent): void {
+        rightDrawerOpen.value = true;
+    }
+}
+const events = new EventCatcher();
 </script>
 
 <template>
   <q-layout view="hHh lpR fFf">
     <q-header elevated class="bg-primary text-white">
-      <MainMenu />
+      <MainMenu @dictionary-toggle="dictionaryToggle" />
     </q-header>
+
+    <q-drawer show-if-above v-model="rightDrawerOpen" side="right" behavior="mobile">
+      <Dictionary />
+    </q-drawer>
 
     <q-page-container>
       <RouterView />
