@@ -5,6 +5,7 @@ FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
 FROM build
 WORKDIR /app
 COPY * ./
+RUN ls
 RUN dotnet restore "BB.API/BB.API.csproj"
 RUN dotnet build "BB.API/BB.API.csproj" -c Release -o /app/publish
 
