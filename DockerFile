@@ -20,6 +20,6 @@ EXPOSE 80
 EXPOSE 443
 
 ENV ASPNETCORE_URLS=http://+:80
-COPY --from=build-ui /app/BB.UI/dist/* ./wwwroot/
-COPY --from=build-api /app/publish/* ./
+COPY --from=build-ui /app/BB.UI/dist/ ./wwwroot/
+COPY --from=build-api /app/publish/ ./
 ENTRYPOINT ["dotnet", "BB.API.dll"]
