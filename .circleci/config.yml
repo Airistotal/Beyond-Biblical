@@ -4,7 +4,7 @@ orbs:
   windows: circleci/windows@2.2.0
 
 jobs:
-  build:
+  test:
     executor: windows/default
     steps:
       - checkout
@@ -12,35 +12,33 @@ jobs:
           name: "Install API dependencies"
           command: dotnet restore .\Source\BB.API\BB.API.csproj
       - run:
-          name: "Build API"
-          command: dotnet publish .\Source\BB.API\BB.API.csproj -c Release
-      - run:
           name: "Build Tests"
           command: ForEach ($folder in (Get-ChildItem -Path Tests -Directory)) { dotnet build $folder.FullName }
       - run:
           name: "Run Tests"
           command: ForEach ($folder in (Get-ChildItem -Path Tests -Directory)) { dotnet test $folder.FullName }
-      - run:
-          name: "Install UI dependencies"
-          command: cd ".\Source\BB.UI"; npm install
-      - run:
-          name: "Build UI"
-          command: cd ".\Source\BB.UI"; npm run build
-      - run:
-          name: "Create wwwroot folder"
-          command: New-Item -Path ".\Source\BB.API\bin\Release\netcoreapp3.0\publish\" -Name "wwwroot" -ItemType "directory"
-      - run:
-          name: "Clean and Copy UI to publish folder"
-          command: Copy-Item -Path ".\Source\BB.UI\dist\*" -Destination ".\Source\BB.API\bin\Release\netcoreapp3.0\publish\wwwroot" -Recurse
-      - persist_to_workspace:
-          root: .
-          paths:
-            - .\Source\BB.API\bin\Release\netcoreapp3.0\publish
-      - store_artifacts:
-          path: .\Source\BB.API\bin\Release\netcoreapp3.0\publish
+  deploy:
+    docker:
+      - image: cimg/go:1.17
+        auth:
+          username: airistotal
+          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
+    steps:
+      - checkout
+
+      - setup_remote_docker:
+          version: 19.03.13
+          docker_layer_caching: true
+
+      - run: |
+          TAG=0.1.$CIRCLE_BUILD_NUM
+          docker build -t airistotal/beyond-biblical:$TAG .
+          echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+          docker push airistotal/beyond-biblical:$TAG
 
 workflows:
   version: 2
   build:
     jobs:
-      - build
+      - test
+      - deploy
