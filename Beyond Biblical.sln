@@ -39,6 +39,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ConfigStylecop", "ConfigSty
 		stylecop.json = stylecop.json
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker", "Docker", "{9C57868F-34C4-41E7-B514-0035395C970E}"
+	ProjectSection(SolutionItems) = preProject
+		.dockerignore = .dockerignore
+		DockerFile = DockerFile
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
