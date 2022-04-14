@@ -18,6 +18,7 @@ jobs:
           name: "Run Tests"
           command: ForEach ($folder in (Get-ChildItem -Path Tests -Directory)) { dotnet test $folder.FullName }
   deploy:
+    working_directory: /app
     docker:
       - image: cimg/go:1.17
         auth:
