@@ -11,15 +11,18 @@ ENV ASPNETCORE_URLS=http://+:80
 
 FROM build
 WORKDIR /
+RUN ls
+WORKDIR /Beyond-Biblical
+RUN ls
 RUN dotnet restore "./Source/BB.API/BB.API.csproj"
 RUN dotnet build "./Source/BB.API/BB.API.csproj" -c Release
 
 FROM node 
-WORKDIR /Source/BB.UI
+WORKDIR /Beyond-Biblical/Source/BB.UI
 RUN npm install && npm run build
 
 FROM build AS publish
-WORKDIR /
+WORKDIR /Beyond-Biblical
 RUN dotnet publish "./Source/BB.API/BB.API.csproj" -c Release -o /app/publish
 
 FROM base AS final
