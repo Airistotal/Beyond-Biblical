@@ -13,7 +13,7 @@ jobs:
           command: dotnet restore .\Source\BB.API\BB.API.csproj
       - run:
           name: "Build API"
-          command: dotnet publish .\Source\BB.API\BB.API.csproj -c Release
+          command: dotnet build .\Source\BB.API\BB.API.csproj
       - run:
           name: "Build Tests"
           command: ForEach ($folder in (Get-ChildItem -Path Tests -Directory)) { dotnet build $folder.FullName }
