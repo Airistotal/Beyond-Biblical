@@ -8,7 +8,7 @@
     "typecheck": "vue-tsc --noEmit"
   },
   "dependencies": {
-    "@quasar/extras": "^1.13.5",
+    "@quasar/extras": "^1.13.6",
     "axios": "^0.26.1",
     "bootstrap-vue-3": "^0.1.9",
     "pinia": "^2.0.13",
